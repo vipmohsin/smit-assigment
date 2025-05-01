@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Digital Clock</title>
+    <style>
+        .back
+        {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 1.5rem;
+            color: #61dafb;
+            text-decoration: none;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #282c34;
+            color: #61dafb;
+            font-family: 'Arial', sans-serif;
+        }
+        .clock {
+            font-size: 4rem;
+            text-align: center;
+            padding: 20px;
+            border: 2px solid #61dafb;
+            border-radius: 10px;
+            background-color: #20232a;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="back">
+        <a href="../../index.html" style="text-decoration: none; color: white;">
+    
+          <- Back
+        </a>
+      </div>
+    <span style="font-size: 1.5rem; padding-bottom: 20px;" id="date"></span>
+    <div class="clock" id="digitalClock" style="line-height: 1.2;">
+        <span style="font-size: 4rem;">00:00:00 AM</span>
+    </div>
+    
+
+    <script>
+        function updateClock() {
+            const clockElement = document.getElementById('digitalClock');
+            show_date=document.querySelector("#date");
+            const now = new Date();
+
+            let hours = now.getHours();
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+
+            hours = hours % 12 || 12; 
+
+            const formattedTime = [
+            hours.toString().padStart(2, '0'),
+            minutes.toString().padStart(2, '0'),
+            seconds.toString().padStart(2, '0')
+            ].join(':') + ` ${ampm}`;
+
+            const formattedDate = now.toLocaleDateString(undefined, {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+            });
+             show_date.innerHTML = formattedDate; 
+             console.log(formattedDate); 
+            clockElement.innerHTML = `${formattedTime}`;
+            
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock(); 
+    </script>
+</body>
+</html>
