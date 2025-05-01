@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inbox (95) - mkmohsin404@gmail.com</title>
+    <link rel="icon" type="images/icon" href="./assets/images/icon.png" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet"/>
+  <style>
+   body {
+     background-color: #f3f4f6;
+     font-family: Arial, sans-serif;
+     margin: 0;
+     padding: 0;
+   }
+
+   .header {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     background-color: white;
+     padding: 16px;
+     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+   }
+
+   .header .logo {
+     display: flex;
+     align-items: center;
+   }
+
+   .header .logo img {
+     width: 40px;
+     height: 40px;
+   }
+
+   .header .logo h1 {
+     font-size: 1.25rem;
+     font-weight: 600;
+     margin-left: 8px;
+   }
+
+   .header .search {
+     position: relative;
+   }
+
+   .header .search input {
+     background-color: #e5e7eb;
+     border-radius: 9999px;
+     padding: 8px 16px;
+     width: 256px;
+     border: none;
+   }
+
+   .header .search i {
+     position: absolute;
+     right: 16px;
+     top: 50%;
+     transform: translateY(-50%);
+     color: #6b7280;
+   }
+
+   .header .icons i,
+   .header .icons img {
+     margin-left: 16px;
+     color: #6b7280;
+   }
+
+   .main-content {
+     display: flex;
+     height: calc(100vh - 64px);
+     overflow: hidden;
+   }
+
+   .sidebar {
+     background-color: white;
+     width: 80px;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     padding: 16px 0;
+     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+   }
+
+   .sidebar .tooltip {
+     position: relative;
+     display: inline-block;
+     margin-bottom: 16px;
+   }
+
+   .sidebar .tooltip .tooltiptext {
+     visibility: hidden;
+     width: 120px;
+     background-color: black;
+     color: #fff;
+     text-align: center;
+     border-radius: 6px;
+     padding: 5px;
+     position: absolute;
+     z-index: 1;
+     opacity: 0;
+     transition: opacity 0.3s;
+   }
+
+   .sidebar .tooltip .tooltiptext::after {
+     content: "";
+     position: absolute;
+     border-width: 5px;
+     border-style: solid;
+   }
+
+   .sidebar .tooltip:hover .tooltiptext {
+     visibility: visible;
+     opacity: 1;
+   }
+
+   .sidebar .tooltip-compose .tooltiptext {
+     top: 125%;
+     left: 50%;
+     margin-left: -60px;
+   }
+
+   .sidebar .tooltip-compose .tooltiptext::after {
+     top: 0%;
+     left: 50%;
+     margin-left: -5px;
+     border-color: black transparent transparent transparent;
+   }
+
+   .sidebar .tooltip .tooltiptext {
+     bottom: 125%;
+     left: 50%;
+     margin-left: -60px;
+   }
+
+   .sidebar .tooltip .tooltiptext::after {
+     top: 100%;
+     left: 50%;
+     margin-left: -5px;
+     border-color: black transparent transparent transparent;
+   }
+
+   .email-list {
+     flex: 1;
+     overflow-y: auto;
+   }
+
+   .email-list .controls,
+   .email-list .tabs {
+     background-color: white;
+     padding: 16px;
+     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+   }
+
+   .email-list .controls {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+   }
+
+   .email-list .controls .left-controls i,
+   .email-list .controls .right-controls i {
+     margin-left: 16px;
+     color: #6b7280;
+   }
+
+   .email-list .tabs {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     border-bottom: 1px solid #e5e7eb;
+   }
+
+   .email-list .tabs .tab {
+     display: flex;
+     align-items: center;
+   }
+
+   .email-list .tabs .tab span {
+     font-weight: 600;
+     margin-left: 8px;
+   }
+
+   .email-list .tabs .tab .badge {
+     background-color: #e5e7eb;
+     color: #374151;
+     padding: 4px 8px;
+     border-radius: 9999px;
+     margin-left: 8px;
+   }
+
+   .email-list .tabs .tab .badge.new {
+     background-color: #10b981;
+     color: white;
+   }
+
+   .email-list .tabs .tab .badge.social {
+     background-color: #3b82f6;
+     color: white;
+   }
+
+   .email-list .tabs .tab .badge.updates {
+     background-color: #f59e0b;
+     color: white;
+   }
+
+   .email-list .email-item {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     padding: 16px;
+     border-bottom: 1px solid #e5e7eb;
+     background-color: white;
+     transition: background-color 0.3s;
+   }
+
+   .email-list .email-item:hover {
+     background-color: #f3f4f6;
+   }
+
+   .email-list .email-item .left {
+     display: flex;
+     align-items: center;
+   }
+
+   .email-list .email-item .left i,
+   .email-list .email-item .left span {
+     margin-left: 16px;
+   }
+
+   .email-list .email-item .left span.sender {
+     font-weight: 600;
+   }
+
+   .email-list .email-item .right {
+     color: #6b7280;
+   }
+
+   @media (max-width: 768px) {
+     .header .search input {
+       width: 160px;
+     }
+
+     .sidebar {
+       width: 60px;
+     }
+
+     .email-list .email-item .left span {
+       display: none;
+     }
+
+     .email-list .email-item .left span.sender {
+       display: inline;
+     }
+   }
+
+   @media (max-width: 480px) {
+     .header .search input {
+       width: 120px;
+     }
+
+     .sidebar {
+       width: 50px;
+     }
+
+     .email-list .email-item .left span {
+       display: none;
+     }
+
+     .email-list .email-item .left span.sender {
+       display: inline;
+     }
+   }
+  </style>
+ </head>
+ <body>
+  <div class="back">
+    <a href="../../index.html" style="text-decoration: none; color: white;">
+
+      <- Back
+    </a>
+  </div>
+  <div class="header">
+   <div class="logo">
+    <img alt="Gmail logo" src="./assets/images/icon.png"/>
+    <h1>
+     Gmail
+    </h1>
+   </div>
+   <div class="search">
+    <input placeholder="Search mail" type="text"/>
+    <i class="fas fa-search">
+    </i>
+   </div>
+   <div class="icons">
+    <i class="fas fa-cog">
+    </i>
+    <i class="fas fa-th">
+    </i>
+    <img alt="User avatar" class="w-10 h-10 rounded-full" height="40" src="https://storage.googleapis.com/a1aa/image/h-GB59I_H9kbc2j7ImwN7-yTfOOyh2eV-bQ3y0hR3jI.jpg" width="40"/>
+   </div>
+  </div>
+  <div class="main-content">
+   <!-- Sidebar -->
+   <div class="offcanvas offcanvas-start" id="offcanvasSidebar">
+    <div class="offcanvas-header">
+ 
+    
+     </button>
+    </div>
+    <div class="offcanvas-body">
+     <div class="sidebar">
+      <div class="tooltip tooltip-compose">
+       <button class="bg-blue-500 text-white p-2 rounded-full">
+        <i class="fas fa-pencil-alt">
+        </i>
+       </button>
+       <span class="tooltiptext">
+        Compose
+       </span>
+      </div>
+      <div class="tooltip">
+       <i class="fas fa-inbox text-gray-500">
+       </i>
+       <span class="tooltiptext">
+        Inbox
+       </span>
+      </div>
+      <div class="tooltip">
+       <i class="fas fa-star text-gray-500">
+       </i>
+       <span class="tooltiptext">
+        Starred
+       </span>
+      </div>
+      <div class="tooltip">
+       <i class="fas fa-clock text-gray-500">
+       </i>
+       <span class="tooltiptext">
+        Snoozed
+       </span>
+      </div>
+      <div class="tooltip">
+       <i class="fas fa-paper-plane text-gray-500">
+       </i>
+       <span class="tooltiptext">
+        Sent
+       </span>
+      </div>
+      <div class="tooltip">
+       <i class="fas fa-file text-gray-500">
+       </i>
+       <span class="tooltiptext">
+        Drafts
+       </span>
+      </div>
+      <div class="tooltip">
+       <i class="fas fa-trash text-gray-500">
+       </i>
+       <span class="tooltiptext">
+        Trash
+       </span>
+      </div>
+      <div class="tooltip">
+       <i class="fas fa-plus text-gray-500">
+       </i>
+       <span class="tooltiptext">
+        More
+       </span>
+      </div>
+     </div>
+    </div>
+   </div>
+   <!-- Email List -->
+   <div class="email-list">
+    <div class="controls">
+     <div class="left-controls">
+      <input type="checkbox"/>
+      <i class="fas fa-redo">
+      </i>
+      <i class="fas fa-ellipsis-v">
+      </i>
+     </div>
+     <div class="right-controls">
+      <span>
+       1-50 of 299
+      </span>
+      <i class="fas fa-chevron-left">
+      </i>
+      <i class="fas fa-chevron-right">
+      </i>
+     </div>
+    </div>
+    <div class="tabs">
+     <div class="tab">
+      <input type="checkbox"/>
+      <span>
+       Primary
+      </span>
+     </div>
+     <div class="tab">
+      <span class="badge">
+       Promotions
+       <span class="badge new">
+        50 new
+       </span>
+      </span>
+      <span class="badge">
+       Social
+       <span class="badge social">
+        50 new
+       </span>
+      </span>
+      <span class="badge">
+       Updates
+       <span class="badge updates">
+        50 new
+       </span>
+      </span>
+     </div>
+    </div>
+    <div class="email-item">
+     <div class="left">
+      <input type="checkbox"/>
+      <i class="far fa-star">
+      </i>
+      <span class="sender">
+       Google
+      </span>
+      <span>
+       Security alert for your linked Google account
+      </span>
+     </div>
+     <div class="right">
+      Feb 1
+     </div>
+    </div>
+    <div class="email-item">
+     <div class="left">
+      <input type="checkbox"/>
+      <i class="far fa-star">
+      </i>
+      <span class="sender">
+       Google
+      </span>
+      <span>
+       Security alert for your linked Google account
+      </span>
+     </div>
+     <div class="right">
+      Jan 26
+     </div>
+    </div>
+    <div class="email-item">
+     <div class="left">
+      <input type="checkbox"/>
+      <i class="far fa-star">
+      </i>
+      <span class="sender">
+       Google
+      </span>
+      <span>
+       Security alert for your linked Google account
+      </span>
+     </div>
+     <div class="right">
+      Jan 24
+     </div>
+    </div>
+    <div class="email-item">
+     <div class="left">
+      <input type="checkbox"/>
+      <i class="far fa-star">
+      </i>
+      <span class="sender">
+       Google
+      </span>
+      <span>
+       Security alert for your linked Google account
+      </span>
+     </div>
+     <div class="right">
+      Jan 19
+     </div>
+    </div>
+    <div class="email-item">
+     <div class="left">
+      <input type="checkbox"/>
+      <i class="far fa-star">
+      </i>
+      <span class="sender">
+       Steam
+      </span>
+      <span>
+       Steam account security alert
+      </span>
+     </div>
+     <div class="right">
+      Dec 25, 2024
+     </div>
+    </div>
+    <div class="email-item">
+     <div class="left">
+      <input type="checkbox"/>
+      <i class="far fa-star">
+      </i>
+      <span class="sender">
+       Google
+      </span>
+      <span>
+       Security alert for your linked Google account
+      </span>
+     </div>
+     <div class="right">
+      Dec 24, 2024
+     </div>
+    </div>
+    <div class="email-item">
+     <div class="left">
+      <input type="checkbox"/>
+      <i class="far fa-star">
+      </i>
+      <span class="sender">
+       Google
+      </span>
+      <span>
+       Security alert for your linked Google account
+      </span>
+     </div>
+     <div class="right">
+      Dec 9, 2024
+     </div>
+    </div>
+    <div class="email-item">
+     <div class="left">
+      <input type="checkbox"/>
+      <i class="far fa-star">
+      </i>
+      <span class="sender">
+       Google
+      </span>
+      <span>
+       Security alert for your linked Google account
+      </span>
+     </div>
+     <div class="right">
+      Nov 26, 2024
+     </div>
+    </div>
+    <div class="email-item">
+     <div class="left">
+      <input type="checkbox"/>
+      <i class="far fa-star">
+      </i>
+      <span class="sender">
+       Google
+      </span>
+      <span>
+       Security alert for your linked Google account
+      </span>
+     </div>
+     <div class="right">
+      Nov 26, 2024
+     </div>
+    </div>
+    <div class="email-item">
+     <div class="left">
+      <input type="checkbox"/>
+      <i class="far fa-star">
+      </i>
+      <span class="sender">
+       Google
+      </span>
+      <span>
+       Security alert for your linked Google account
+      </span>
+     </div>
+     <div class="right">
+      Nov 26, 2024
+     </div>
+    </div>
+    <div class="email-item">
+     <div class="left">
+      <input type="checkbox"/>
+      <i class="far fa-star">
+      </i>
+      <span class="sender">
+       Google
+      </span>
+      <span>
+       Security alert for your linked Google account
+      </span>
+     </div>
+     <div class="right">
+      Nov 4, 2024
+     </div>
+    </div>
+    <div class="email-item">
+     <div class="left">
+      <input type="checkbox"/>
+      <i class="far fa-star">
+      </i>
+      <span class="sender">
+       Google
+      </span>
+      <span>
+       Security alert for your linked Google account
+      </span>
+     </div>
+     <div class="right">
+      Oct 29, 2024
+     </div>
+    </div>
+    <div class="email-item">
+     <div class="left">
+      <input type="checkbox"/>
+      <i class="far fa-star">
+      </i>
+      <span class="sender">
+       Google
+      </span>
+      <span>
+       Security alert for your linked Google account
+      </span>
+     </div>
+     <div class="right">
+      Oct 28, 2024
+     </div>
+    </div>
+    <div class="email-item">
+     <div class="left">
+      <input type="checkbox"/>
+      <i class="far fa-star">
+      </i>
+      <span class="sender">
+       Google
+      </span>
+      <span>
+       Security alert for your linked Google account
+      </span>
+     </div>
+     <div class="right">
+      Oct 23, 2024
+     </div>
+    </div>
+    <div class="email-item">
+     <div class="left">
+      <input type="checkbox"/>
+      <i class="far fa-star">
+      </i>
+      <span class="sender">
+       Google
+      </span>
+      <span>
+       Security alert for your linked Google account
+      </span>
+     </div>
+     <div class="right">
+      Oct 15, 2024
+     </div>
+    </div>
+    <div class="email-item">
+     <div class="left">
+      <input type="checkbox"/>
+      <i class="far fa-star">
+      </i>
+      <span class="sender">
+       Google
+      </span>
+      <span>
+       Security alert for your linked Google account
+      </span>
+     </div>
+     <div class="right">
+      Oct 3, 2024
+     </div>
+    </div>
+   </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js">
